@@ -1,0 +1,91 @@
+.coldes{
+    margin-right: 10px; 
+}
+
+.designer_canvas{
+    margin-bottom: 40px;
+}
+
+.img-icon-designer{
+    text-align: center;
+}
+
+.text-icon-designer{
+    text-align: center;
+}
+
+.img-little-designer{
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.lowbar-img-div{
+    
+    text-align: center;
+    margin-top: 10px;
+    padding-top: 10px;
+}
+
+.right-col{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.center-col{
+    height: 350px;
+    text-align: center;
+    background-size: 500px;
+    background-repeat: no-repeat;
+}
+
+.logo-center-col{
+
+}
+
+.backimage-center{
+    position: relative;
+}
+
+.overlay-center{
+    position: absolute;
+    top: 340; /*estaba en 300*/
+    left: 32%;
+    width: 35%;
+    height: 30%;
+    z-index: 10;
+
+}
+
+.logos-menu{
+    margin-top: 10px;
+    
+}
+
+#logos.text{
+    text-align: left;
+}
+
+#logos.caret{
+    text-align: right;
+}
+
+.nav-lowbar-icons{
+    margin-top: -10px;
+    cursor:pointer;
+}
+
+#colors_content{
+    text-align: center;
+}
+.color_item{
+    margin-right: 5px;
+    cursor:pointer;
+}
+
+.designer_lowbar{
+    margin-top: -10px;
+}
+
+.lowbar-icons{
+    margin-right: 3px;
+}

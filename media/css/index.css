@@ -1,0 +1,14 @@
+/* 
+    Document   : index
+    Created on : 18/11/2013, 05:24:52 PM
+    Author     : Pato
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+#categoriaNinos{
+    padding-top: 100px;
+}

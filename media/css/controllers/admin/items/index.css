@@ -1,0 +1,16 @@
+/* 
+    Document   : index
+    Created on : 30/03/2014, 11:32:59 PM
+    Author     : Pato
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+.picture_img{
+    width: 50px;
+    height: 50px;
+}
+

@@ -1,0 +1,3 @@
+https://gimpresiones.com:2096/webmaillogout.cgi
+username: patricio@gimpresiones.com
+password: pmoreanoj

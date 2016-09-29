@@ -1,0 +1,25 @@
+body{
+    background: #58ACFA;
+}
+.date_input{
+    width: 35px;
+}
+.login-form{
+    margin-left: 5px;
+}
+.form_label{
+    padding-top: 5px;
+}
+.container{
+    background: white;
+}
+.menu-tabs li{
+    float: left;
+    list-style: none;
+    margin-right: 10px;
+    font-size: 12px;
+    font-style: bold;
+}
+.menu-tabs a:hover ,.menu-tabs a {
+    text-decoration: none;
+}

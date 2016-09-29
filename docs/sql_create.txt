@@ -1,0 +1,219 @@
+
+-- -----------------------------------------------------
+-- Table `clients`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `clients` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `first_name` VARCHAR(45) NOT NULL,
+  `last_name` VARCHAR(45) NOT NULL,
+  `identification` VARCHAR(25) NOT NULL,
+  `phone` VARCHAR(45) NOT NULL,
+  `address` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `products`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `products` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `quantity` INT NOT NULL DEFAULT 1,
+  `uploaded_logo` ENUM('YES','NO') NOT NULL DEFAULT 'NO,
+  `image` TEXT NULL,
+  `item_id` INT NOT NULL,
+  `logos_id` INT NULL,
+  `option` ENUM('TERMIC','TRANSFER','CUSTOM') NOT NULL,
+  `total_price` DOUBLE NOT NULL,
+  `more` TEXT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_products_logos1_idx` (`logos_id` ASC),
+  INDEX `fk_products_item1_idx` (`item_id` ASC),
+  CONSTRAINT `fk_products_logos1`
+    FOREIGN KEY (`logos_id`)
+    REFERENCES `logos` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_products_item1`
+    FOREIGN KEY (`item_id`)
+    REFERENCES `item` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `logos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `logos` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `category` ENUM('TEXTO','BROMAS','FRASES','DIBUJOS','SIMPSONS','DRAGONBALL','SONIC','HEROES','PELICULAS','TRANSFORMERS','TWILLIGHT','PERSONAJES','DONRAMON','OTROS') NOT NULL,
+  `type` ENUM('TRANSFER','TERMIC') NOT NULL,
+  `description` TEXT NULL,
+  `image` TEXT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `clothing_colors`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `clothing_colors` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `description` TEXT NULL,
+  `image` TEXT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `clothing`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `clothing` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `person_type` ENUM('MEN','WOMEN','KIDS') NOT NULL,
+  `type_enum` ENUM('T-SHIRT','V-SHIRT','BBDS_A','BBDS_B','BUSO_A','BUSO_B') NOT NULL,
+  `price` DOUBLE NOT NULL,
+  `size` VARCHAR(10) NOT NULL,
+  `paper_termic` DOUBLE NOT NULL,
+  `paper_transfer` DOUBLE NOT NULL,
+  `custom_logo` DOUBLE NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `item`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `item` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `photo` TEXT NOT NULL,
+  `clothing_id` INT NOT NULL,
+  `first_color` INT NOT NULL,
+  `second_color` INT NULL,
+  `active` ENUM('ENABLED','DISABLED') NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_item_clothing_colors1_idx` (`first_color` ASC),
+  INDEX `fk_item_clothing1_idx` (`clothing_id` ASC),
+  CONSTRAINT `fk_item_clothing_colors1`
+    FOREIGN KEY (`first_color`)
+    REFERENCES `clothing_colors` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_item_clothing1`
+    FOREIGN KEY (`clothing_id`)
+    REFERENCES `clothing` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `products`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `products` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `quantity` INT NOT NULL DEFAULT 1,
+  `uploaded_logo` ENUM('YES','NO') NOT NULL DEFAULT 'NO,
+  `image` TEXT NULL,
+  `item_id` INT NOT NULL,
+  `logos_id` INT NULL,
+  `option` ENUM('TERMIC','TRANSFER','CUSTOM') NOT NULL,
+  `total_price` DOUBLE NOT NULL,
+  `more` TEXT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_products_logos1_idx` (`logos_id` ASC),
+  INDEX `fk_products_item1_idx` (`item_id` ASC),
+  CONSTRAINT `fk_products_logos1`
+    FOREIGN KEY (`logos_id`)
+    REFERENCES `logos` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_products_item1`
+    FOREIGN KEY (`item_id`)
+    REFERENCES `item` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `invoices`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `invoices` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `date` DATETIME NOT NULL,
+  `more` TEXT NULL,
+  `clients_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_invoices_clients1_idx` (`clients_id` ASC),
+  CONSTRAINT `fk_invoices_clients1`
+    FOREIGN KEY (`clients_id`)
+    REFERENCES `clients` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `orders`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `orders` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `invoices_id` INT NOT NULL,
+  `shipping_type` ENUM('SHIPPING','LOCAL') NOT NULL,
+  `subtotal` DOUBLE NOT NULL,
+  `taxes` DOUBLE NOT NULL,
+  `discount` DOUBLE NULL,
+  `total` DOUBLE NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_orders_invoices1_idx` (`invoices_id` ASC),
+  CONSTRAINT `fk_orders_invoices1`
+    FOREIGN KEY (`invoices_id`)
+    REFERENCES `invoices` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `users`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `first_name` VARCHAR(45) NOT NULL,
+  `last_name` VARCHAR(45) NOT NULL,
+  `username` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  `type` ENUM('USER','ADMIN','CLIENT') NOT NULL DEFAULT 'CLIENT',
+  `email` VARCHAR(45) NOT NULL,
+  `client_id` VARCHAR(20) NULL,
+  `status` ENUM('ACTIVE','DISABLED') NOT NULL DEFAULT 'DISABLED',
+  `hash` TEXT NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `orders_has_products`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `orders_has_products` (
+  `orders_id` INT NOT NULL,
+  `products_id` INT NOT NULL,
+  PRIMARY KEY (`orders_id`, `products_id`),
+  INDEX `fk_orders_has_products_products1_idx` (`products_id` ASC),
+  INDEX `fk_orders_has_products_orders1_idx` (`orders_id` ASC),
+  CONSTRAINT `fk_orders_has_products_orders1`
+    FOREIGN KEY (`orders_id`)
+    REFERENCES `orders` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_orders_has_products_products1`
+    FOREIGN KEY (`products_id`)
+    REFERENCES `products` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
